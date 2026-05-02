@@ -12,7 +12,7 @@ function getSupabasePublicKey(): string | undefined {
 
 export function isSupabaseConfigured(): boolean {
   return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL && getSupabasePublicKey(),
+    process.env.SUPABASE_URL && getSupabasePublicKey(),
   );
 }
 
@@ -20,7 +20,7 @@ export function getSupabaseBrowserClient(): SupabaseClient | null {
   if (!isSupabaseConfigured()) return null;
   const key = getSupabasePublicKey()!;
   if (!browserClient) {
-    browserClient = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, key);
+    browserClient = createClient(process.env.SUPABASE_URL!, key);
   }
   return browserClient;
 }
