@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useApp } from "@/lib/app-context";
 import { PREP_TARGET_DEFS, PREP_TARGET_IDS } from "@/lib/prep-targets";
 import type { PrepTargetId, TabId } from "@/lib/types";
@@ -26,31 +27,23 @@ export function AppShell() {
     setTab,
     toast,
     toggleTheme,
-    exportData,
-    importData,
-    resetProgress,
     user,
     authReady,
     cloudConfigured,
+    cloudSyncReady,
+    signOut,
+    showToast,
     prepTarget,
     setPrepTarget,
     prepBrand,
   } = useApp();
 
+  const [showLoginOverlay, setShowLoginOverlay] = useState(false);
+
   const needsCloudLogin =
     cloudConfigured && (!authReady || !user);
 
-  if (needsCloudLogin) {
-    return (
-      <>
-        <LoginGate />
-        {toast ? (
-          <div className="toast">{toast}</div>
-        ) : null}
-      </>
-    );
-  }
-
+  // Always show the main app, overlay login when needed or requested
   const showDock = cloudConfigured && Boolean(user);
 
   return (
@@ -91,31 +84,78 @@ export function AppShell() {
               </button>
             ))}
           </div>
+
+          {/* Profile section */}
+          <div className="sb-profile">
+            {showDock && (
+              <div>
+                <div className="sb-profile__user">
+                  <span className="sb-profile__avatar" aria-hidden>
+                    {user?.email?.charAt(0).toUpperCase() || "?"}
+                  </span>
+                  <div className="sb-profile__text">
+                    <span className="sb-profile__email">
+                      {user?.email || "Account"}
+                    </span>
+                    <div className="sb-profile__sync">
+                      {cloudSyncReady ? (
+                        <span style={{ color: "#4ade80", fontSize: "11px" }}>✓ Synced</span>
+                      ) : (
+                        <span style={{ color: "#fbbf24", fontSize: "11px" }}>⟳ Syncing…</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="nav-item sb-profile__logout"
+                  onClick={() => {
+                    void signOut().then(() => showToast("Signed out successfully"));
+                  }}
+                  style={{ color: "var(--coral)", fontSize: "13px" }}
+                >
+                  <span className="nav-icon">↪</span>
+                  <span>Sign out</span>
+                </button>
+              </div>
+            )}
+
+            {!showDock && cloudConfigured && (
+              <div>
+                <div className="sb-profile__signin-notice">
+                  <span style={{ fontSize: "11px", color: "var(--text3)", marginBottom: "8px", display: "block" }}>
+                    Sign in to sync your progress across devices
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="nav-item sb-profile__signin"
+                  onClick={() => {
+                    setShowLoginOverlay(true);
+                  }}
+                  style={{ color: "var(--blue)", fontSize: "13px" }}
+                >
+                  <span className="nav-icon">🔐</span>
+                  <span>Sign in</span>
+                </button>
+              </div>
+            )}
+
+            {!cloudConfigured && (
+              <div style={{ color: "var(--text3)", fontSize: "11px", padding: "8px 12px" }}>
+                Using local storage only
+              </div>
+            )}
+          </div>
+
           <div className="sb-bottom">
             <button type="button" className="nav-item" onClick={toggleTheme}>
               <span className="nav-icon">{state.theme === "dark" ? "☀" : "☾"}</span>
               <span>{state.theme === "dark" ? "Light" : "Dark"}</span>
             </button>
-            <button type="button" className="nav-item" onClick={exportData}>
-              <span className="nav-icon">↑</span>
-              <span>Export</span>
-            </button>
-            <button type="button" className="nav-item" onClick={importData}>
-              <span className="nav-icon">↓</span>
-              <span>Import</span>
-            </button>
-            <button
-              type="button"
-              className="nav-item"
-              onClick={resetProgress}
-              style={{ color: "var(--coral)" }}
-            >
-              <span className="nav-icon">✕</span>
-              <span>Reset</span>
-            </button>
           </div>
         </nav>
-        <main className={showDock ? "main main--with-dock" : "main"}>
+        <main className="main">
           <div className="main-content">
             {tab === "dashboard" && <Dashboard />}
             {tab === "questions" && <QuestionList />}
@@ -125,9 +165,22 @@ export function AppShell() {
           </div>
         </main>
       </div>
-      {showDock ? <ProfileDock /> : null}
+
+      {(needsCloudLogin || showLoginOverlay) && (
+        <div 
+          className="login-overlay"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowLoginOverlay(false);
+            }
+          }}
+        >
+          <LoginGate />
+        </div>
+      )}
+
       {toast ? (
-        <div className={showDock ? "toast toast--above-dock" : "toast"}>{toast}</div>
+        <div className="toast">{toast}</div>
       ) : null}
     </>
   );

@@ -414,6 +414,84 @@ a {
   bottom: calc(52px + env(safe-area-inset-bottom, 0px) + 16px);
 }
 
+.sb-profile {
+  padding: 12px 8px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 8px 0;
+}
+
+.sb-profile__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+}
+
+.sb-profile__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.sb-profile__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.sb-profile__email {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sb-profile__sync {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+.sb-profile__logout {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.sb-profile__signin {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.sb-profile__signin-notice {
+  padding: 8px 12px 0;
+}
+
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
 .sb-bottom {
   padding: 12px 8px;
   border-top: 1px solid var(--border);
