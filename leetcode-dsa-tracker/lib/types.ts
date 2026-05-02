@@ -1,9 +1,4 @@
-export type PrepTargetId =
-  | "confidence"
-  | "sde1"
-  | "sde2"
-  | "ui1"
-  | "ui2";
+export type PrepTargetId = "confidence" | "frontend";
 
 export type Question = {
   id: number;

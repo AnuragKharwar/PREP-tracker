@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "DSA Prep Tracker",
   description:
-    "LeetCode prep by track — SDE1/SDE2, UI engineer paths, easy confidence mode, study mode & interview log",
+    "Front-end developer prep — frontend-specific path, easy confidence mode, study mode & interview log",
 };
 
 export default function RootLayout({

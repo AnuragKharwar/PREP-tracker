@@ -91,7 +91,7 @@ export function FrontendResources() {
           <div className="section-header">
             <div>
               <h3>Hot frontend topics</h3>
-              <p>Interview themes seen across recent FE SDE2 rounds.</p>
+              <p>Interview themes seen across recent frontend rounds.</p>
             </div>
             <span className="badge b-pat">Top 14</span>
           </div>

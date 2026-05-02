@@ -9,7 +9,7 @@ import { today } from "@/lib/utils";
 function emptyForm() {
   return {
     company: "",
-    role: "Frontend SDE2",
+    role: "Frontend Developer",
     status: "Applied",
     date: today(),
     notes: "",

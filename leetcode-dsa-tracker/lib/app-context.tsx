@@ -125,7 +125,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     document.title = prepTargetDocumentTitle(prepTarget);
   }, [prepTarget]);
 
-  const cloudConfigured = useMemo(() => isSupabaseConfigured(), []);
+  const [cloudConfigured, setCloudConfigured] = useState(false);
+
+  useEffect(() => {
+    setCloudConfigured(isSupabaseConfigured());
+  }, []);
 
   useEffect(() => {
     if (!hydrated) return;

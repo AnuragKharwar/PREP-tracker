@@ -3,7 +3,7 @@ import type { AppState } from "./types";
 export const STORAGE_KEY = "fe_dsa_v3";
 
 export const DEFAULT_STATE: AppState = {
-  prepTarget: "sde2",
+  prepTarget: "frontend",
   questions: {},
   dailyGoal: 5,
   streak: { current: 0, best: 0, lastDate: "" },
