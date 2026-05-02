@@ -5,8 +5,8 @@ let browserClient: SupabaseClient | null = null;
 /** Supabase dashboard may show “anon” / legacy JWT key or the newer publishable key — both work with the JS client. */
 function getSupabasePublicKey(): string | undefined {
   return (
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+    process.env.SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_PUBLISHABLE_KEY
   );
 }
 
