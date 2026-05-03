@@ -11,6 +11,7 @@ import { LoginGate } from "./LoginGate";
 import { ProfileDock } from "./ProfileDock";
 import { QuestionList } from "./QuestionList";
 import { StudyMode } from "./StudyMode";
+import { TemplateLibrary } from "./TemplateLibrary";
 
 const NAV_ITEMS: { id: TabId; icon: string; label: string }[] = [
   { id: "dashboard", icon: "⬡", label: "Dashboard" },
@@ -18,6 +19,7 @@ const NAV_ITEMS: { id: TabId; icon: string; label: string }[] = [
   { id: "study", icon: "⏱", label: "Study Mode" },
   { id: "interviews", icon: "⌘", label: "Interview Log" },
   { id: "frontend", icon: "⚡", label: "FE Prep" },
+  { id: "templates", icon: "✎", label: "Templates" },
 ];
 
 export function AppShell() {
@@ -162,6 +164,7 @@ export function AppShell() {
             {tab === "study" && <StudyMode />}
             {tab === "interviews" && <InterviewLog />}
             {tab === "frontend" && <FrontendResources />}
+            {tab === "templates" && <TemplateLibrary />}
           </div>
         </main>
       </div>

@@ -11,7 +11,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { AppState, Interview, PrepTargetId, Question, TabId } from "./types";
+import type { AppState, Interview, PrepTargetId, Question, TabId, TemplateItem } from "./types";
 import { DEFAULT_STATE, loadState, saveState } from "./storage";
 import { QUESTIONS } from "./questions";
 import {
@@ -44,6 +44,9 @@ type AppContextValue = {
   addInterview: (iv: Interview) => void;
   updateInterview: (id: string, data: Partial<Interview>) => void;
   deleteInterview: (id: string) => void;
+  addTemplate: (template: TemplateItem) => void;
+  updateTemplate: (id: string, data: Partial<TemplateItem>) => void;
+  deleteTemplate: (id: string) => void;
   user: User | null;
   authReady: boolean;
   cloudConfigured: boolean;
@@ -332,6 +335,29 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  const addTemplate = useCallback((template: TemplateItem) => {
+    setState((prev) => ({
+      ...prev,
+      templates: [template, ...(prev.templates || [])],
+    }));
+  }, []);
+
+  const updateTemplate = useCallback((id: string, data: Partial<TemplateItem>) => {
+    setState((prev) => ({
+      ...prev,
+      templates: (prev.templates || []).map((template) =>
+        template.id === id ? { ...template, ...data } : template,
+      ),
+    }));
+  }, []);
+
+  const deleteTemplate = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      templates: (prev.templates || []).filter((template) => template.id !== id),
+    }));
+  }, []);
+
   const exportData = useCallback(() => {
     const blob = new Blob([JSON.stringify(state, null, 2)], {
       type: "application/json",
@@ -395,6 +421,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       addInterview,
       updateInterview,
       deleteInterview,
+      addTemplate,
+      updateTemplate,
+      deleteTemplate,
       user,
       authReady,
       cloudConfigured,
@@ -423,6 +452,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       addInterview,
       updateInterview,
       deleteInterview,
+      addTemplate,
+      updateTemplate,
+      deleteTemplate,
       user,
       authReady,
       cloudConfigured,

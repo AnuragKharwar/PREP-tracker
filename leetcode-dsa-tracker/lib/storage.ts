@@ -9,6 +9,7 @@ export const DEFAULT_STATE: AppState = {
   streak: { current: 0, best: 0, lastDate: "" },
   theme: "dark",
   interviews: [],
+  templates: [],
   dailyDone: {},
 };
 
